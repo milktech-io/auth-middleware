@@ -1,4 +1,4 @@
-module github.com/auth-middleware
+module github.com/milktech-io/auth-middleware
 
 go 1.20
 
