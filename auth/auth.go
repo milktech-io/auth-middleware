@@ -139,7 +139,6 @@ func RoleMiddleware(requiredRole string) gin.HandlerFunc {
 		hasRole := false
 		for _, role := range roles {
 			if role == requiredRole {
-				c.Set("role", requiredRole)
 				hasRole = true
 				break
 			}
@@ -150,6 +149,7 @@ func RoleMiddleware(requiredRole string) gin.HandlerFunc {
 			c.Abort()
 			return
 		}
+		c.Set("role", requiredRole)
 		c.Next()
 	}
 }
