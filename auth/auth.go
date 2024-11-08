@@ -153,3 +153,14 @@ func RoleMiddleware(requiredRole string) gin.HandlerFunc {
 		c.Next()
 	}
 }
+
+func GetClaims(c *gin.Context) jwt.MapClaims {
+	data := c.Keys
+	for _, value := range data {
+		switch v := value.(type) {
+		case jwt.Claims:
+			return v.(jwt.MapClaims)
+		}
+	}
+	return nil
+}
