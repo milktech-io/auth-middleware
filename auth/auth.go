@@ -139,17 +139,17 @@ func RoleMiddleware(requiredRole string) gin.HandlerFunc {
 		hasRole := false
 		for _, role := range roles {
 			if role == requiredRole {
+				c.Set("role", requiredRole)
 				hasRole = true
 				break
 			}
 		}
 
 		if !hasRole {
-			c.JSON(http.StatusForbidden, gin.H{"error": "Insufficient role"})
+			c.JSON(http.StatusForbidden, gin.H{"error": "operation not allowed"})
 			c.Abort()
 			return
 		}
-
 		c.Next()
 	}
 }
