@@ -7,6 +7,7 @@ import (
 	"strings"
 	"sync"
 
+	"github.com/aws/aws-sdk-go/service/dynamodb"
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt"
 	"github.com/joho/godotenv"
@@ -41,6 +42,8 @@ var jwks *JWKs
 var once sync.Once
 
 func getJWKs() (*JWKs, error) {
+	s := dynamodb.AttributeValue{}
+	fmt.Println(s)
 	var err error
 	once.Do(func() {
 		resp, err := http.Get(fmt.Sprintf("https://%s/.well-known/jwks.json", authDomain))
@@ -119,7 +122,7 @@ func AuthMiddleware() gin.HandlerFunc {
 	}
 }
 
-func RoleMiddleware(requiredRole string) gin.HandlerFunc {
+func RoleMiddleware(acceptedRoles string) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		userClaims, exists := c.Get("user")
 		if !exists {
@@ -138,9 +141,11 @@ func RoleMiddleware(requiredRole string) gin.HandlerFunc {
 
 		hasRole := false
 		for _, role := range roles {
-			if role == requiredRole {
-				hasRole = true
-				break
+			for _, acceptedRole := range acceptedRoles {
+				if role == acceptedRole {
+					hasRole = true
+					break
+				}
 			}
 		}
 
