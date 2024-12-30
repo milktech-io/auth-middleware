@@ -19,7 +19,7 @@ func main() {
 		c.JSON(http.StatusOK, gin.H{"message": "Hello, this is a secure endpoint", "user": user})
 	})
 
-	r.GET("/admin-endpoint", auth.AuthMiddleware(), auth.RoleMiddleware("admin"), func(c *gin.Context) {
+	r.GET("/admin-endpoint", auth.AuthMiddleware(), auth.RoleMiddleware([]string{"admin"}), func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{"message": "Hello, this is an admin endpoint"})
 	})
 
