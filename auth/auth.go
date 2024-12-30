@@ -122,7 +122,7 @@ func AuthMiddleware() gin.HandlerFunc {
 	}
 }
 
-func RoleMiddleware(acceptedRoles string) gin.HandlerFunc {
+func RoleMiddleware(acceptedRoles []string) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		userClaims, exists := c.Get("user")
 		if !exists {
