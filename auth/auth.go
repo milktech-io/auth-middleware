@@ -121,7 +121,7 @@ func AuthMiddleware() gin.HandlerFunc {
 	}
 }
 
-func RoleMiddleware(requiredRole string) gin.HandlerFunc {
+func RoleMiddleware(requiredRole []string) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		userClaims, exists := c.Get("user")
 		if !exists {
@@ -140,9 +140,11 @@ func RoleMiddleware(requiredRole string) gin.HandlerFunc {
 
 		hasRole := false
 		for _, role := range roles {
-			if role == requiredRole {
-				hasRole = true
-				break
+			for _, v := range requiredRole {
+				if role == v {
+					hasRole = true
+					break
+				}
 			}
 		}
 
