@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"os"
 	"strings"
 	"sync"
 
@@ -22,8 +23,9 @@ func init() {
 		fmt.Println("No .env file found")
 	}
 
-	authDomain = "dev-5n7zji68qln0wcwj.us.auth0.com" // os.Getenv("AUTH0_DOMAIN")
-	authAudience = "https://api-condominios"         // os.Getenv("AUTH0_AUDIENCE")
+	fmt.Println(os.Getenv("AUTH0_AUDIENCE"))
+	authDomain = "dev-5n7zji68qln0wcwj.us.auth0.com"  // os.Getenv("AUTH0_DOMAIN")
+	authAudience = "mgxvQpqQqAXTxZtQQ39dM92z5nYpvpyD" // os.Getenv("AUTH0_AUDIENCE")
 }
 
 type JWKs struct {
