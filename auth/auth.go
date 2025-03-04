@@ -25,7 +25,7 @@ func init() {
 	}
 
 	fmt.Println(os.Getenv("AUTH0_AUDIENCE"))
-	authDomain = "dev-5n7zji68qln0wcwj.us.auth0.com" // os.Getenv("AUTH0_DOMAIN")
+	authDomain = "dev-8qs326yu7f2mbnky.us.auth0.com" // os.Getenv("AUTH0_DOMAIN")
 	authAudience = "https://api-fisccloud"
 	aud = "mgxvQpqQqAXTxZtQQ39dM92z5nYpvpyD" // os.Getenv("AUTH0_AUDIENCE")
 }
