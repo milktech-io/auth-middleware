@@ -16,6 +16,7 @@ import (
 var (
 	authDomain   string
 	authAudience string
+	aud          string
 )
 
 func init() {
@@ -24,8 +25,9 @@ func init() {
 	}
 
 	fmt.Println(os.Getenv("AUTH0_AUDIENCE"))
-	authDomain = "dev-5n7zji68qln0wcwj.us.auth0.com"  // os.Getenv("AUTH0_DOMAIN")
-	authAudience = "mgxvQpqQqAXTxZtQQ39dM92z5nYpvpyD" // os.Getenv("AUTH0_AUDIENCE")
+	authDomain = "dev-5n7zji68qln0wcwj.us.auth0.com" // os.Getenv("AUTH0_DOMAIN")
+	authAudience = "https://api-fisccloud"
+	aud = "mgxvQpqQqAXTxZtQQ39dM92z5nYpvpyD" // os.Getenv("AUTH0_AUDIENCE")
 }
 
 type JWKs struct {
@@ -100,7 +102,7 @@ func AuthMiddleware() gin.HandlerFunc {
 		}
 
 		if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
-			if !claims.VerifyAudience(authAudience, false) {
+			if !claims.VerifyAudience(aud, false) {
 				c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid audience"})
 				c.Abort()
 				return
