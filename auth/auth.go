@@ -102,7 +102,7 @@ func AuthMiddleware() gin.HandlerFunc {
 		}
 
 		if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
-			if !claims.VerifyAudience(aud, false) {
+			if !claims.VerifyAudience(aud, false) || !claims.VerifyAudience(authAudience, false) {
 				c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid audience"})
 				c.Abort()
 				return
